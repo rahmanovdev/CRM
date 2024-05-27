@@ -1,6 +1,7 @@
 import React from 'react'
 import { TableBody, TableContainer, TableHead, TableOrder, TableOrderId, TableStatus, TableTd, TableTh, TableTr } from './styled'
 import Checkbox from '../../Atoms/Checkbox/Checkbox'
+import moment from 'moment'
 
 export default function Table({data}) {
   return (
@@ -27,7 +28,7 @@ export default function Table({data}) {
                     <TableOrder>{item.title}</TableOrder>
                     <TableOrderId>{item.id}</TableOrderId>
                 </TableTd>
-                <TableTd>{item.date}</TableTd>
+                <TableTd>{moment(item.date).format('ll')}</TableTd>
                 <TableTd>{item.customer.full_name}</TableTd>
                 <TableTd>
                     <TableStatus bg='#E7F7EF' color='#0CAF60'>{item.payment_status}</TableStatus>

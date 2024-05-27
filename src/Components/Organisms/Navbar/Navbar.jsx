@@ -15,6 +15,7 @@ export default function Navbar({title}) {
           <MailIcon/>
           <BellIcon/>
         <ProfilePreview/>
+        
       </NavbarRight>
       
     </NavbarStyled>
