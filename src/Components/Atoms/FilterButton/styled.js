@@ -5,11 +5,12 @@ export const FilterButtonStyled = styled.div`
   align-items: center;
   max-width: max-content;
   gap: 8px;
-  padding: 8px;
+  padding: 16px;
+  border-radius: 12px;
   cursor: pointer;
-  border: 1px solid gray;
+  border: 1px solid rgba(250, 250, 250, 1);
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(250, 250, 250, 1);
 `;
 
 export const FilterIconStyled = styled.div`

@@ -2,79 +2,85 @@ import React, { useEffect, useState } from "react";
 import MainTemplate from "../../Templates/MainTemplate/MainTemplate";
 import { BlockContainer } from "../../../Base/styled";
 import Tabs from "../../Molecules/Tabs/Tabs";
-import { TABS_LIST, orderList } from "./const";
+import { PAIMENT_OPTIONS,  orderList } from "./const";
 import Table from "../../Molecules/Table/Table";
 import Search from "../../Atoms/Search/Search";
 import CustomDatePicker from "../../Atoms/CustomDatePicker/CustomDatePicker";
 import FilterButton from "../../Atoms/FilterButton/FilterButton";
+import Select from "../../Atoms/Select/Select";
+import { FlexRow } from "./styled";
+import Button from "../../Atoms/Button/Button";
+import RemoveModal from "../../Organisms/RemoveModal/RemoveModal";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkedForRemove,
+  removeHandler,
+  searchHandler,
+  searchPaymentHandler,
+  searchStatusHandler,
+  setData,
+  tabHandler,
+  visibleRemoveModal,
+} from "../../../Store/Slice/ordersSlice";
 
 export default function Orders() {
-  const [tabsList, setTabslist] = useState(TABS_LIST);
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [data, setData] = useState(orderList);
-  const [filtersShow, setFiltersShow] = useState(false); 
+
+  const data = useSelector((state) => state.rootReducer?.ordersSlice?.data);
+  const visibleRemove = useSelector(
+    (state) => state.rootReducer?.ordersSlice?.remove_modal_visible
+  );
+  const tabsList = useSelector(
+    (state) => state.rootReducer?.ordersSlice?.tabs_list
+  );
+
+  console.log(tabsList);
+
+  const [filtersShow, setFiltersShow] = useState(false);
 
   useEffect(() => {
     searchByTitle(search);
   }, [search]);
 
   const setTab = (id) => {
-    console.log(id);
-    const data = tabsList.map((tab) => {
-      tab.id === id ? (tab.active = true) : (tab.active = false);
-      return tab;
-    });
-    setTabslist(data);
+    dispatch(tabHandler(id));
     searchByStatus(id);
   };
 
-  const searchByStatus = (id) => {
-    const sendData = orderList.filter((item) => {
-      return id === "all"
-        ? item
-        : item.status.toLowerCase() === id.toLowerCase();
-    });
-    setData(sendData);
-  };
+  const searchByStatus = (id) => dispatch(searchStatusHandler(id));
 
-  const searchByTitle = (title) => {
-    const senData = orderList.filter((item) =>
-      item.title
-        .toLocaleLowerCase()
-        .trim()
-        .includes(title.toLocaleLowerCase().trim())
-    );
-    setData(senData);
-  };
+  const searchByTitle = (title) => dispatch(searchHandler(title));
 
-  const searchByPrice = (e) => {
-    const value = e.target.value;
-    const senData = orderList.filter(item => {
-      return value === 'none' ? item : item.price === value;
-    })
-     setData(senData);
-  }
+  const searchByPayment = (payment) => dispatch(searchPaymentHandler(payment));
+
+  const checkedHandler = (id, status) =>
+    dispatch(checkedForRemove({ id, status }));
+  const removeOrder = () => dispatch(removeHandler());
+
+  const searchByDate = (results) => dispatch(setData(results))
+
+  const showRemove = () => dispatch(visibleRemoveModal(true));
+  const hideRemove = () => dispatch(visibleRemoveModal(false));
 
   return (
     <MainTemplate title="Orders">
+      {visibleRemove ? (
+        <RemoveModal closeHandler={hideRemove} submitHandler={removeOrder} />
+      ) : null}
       <BlockContainer>
         <Tabs list={tabsList} setTab={setTab} />
-        <Search value={search} setValue={setSearch} />
-        <CustomDatePicker data={orderList} setData={setData} />
-        <FilterButton active={filtersShow} setFilters={setFiltersShow} />
+        <FlexRow>
+          <Search value={search} setValue={setSearch} />
+          <FilterButton active={filtersShow} setFilters={setFiltersShow} />
+          <CustomDatePicker data={orderList} setData={searchByDate} />
+          <Button handler={showRemove}>Remove order</Button>
+        </FlexRow>
+
         {filtersShow ? (
-          <div>
-            <select name="" id="" onChange={searchByPrice}>
-              <option value="none">Select avarege price</option>
-              <option value="450">$450</option>
-              <option value="750">$750</option>
-              <option value="1200">$1200</option>
-              <option value="2500">$2500</option>
-              <option value="350">$350</option>
-            </select>
-          </div>
+          <Select options={PAIMENT_OPTIONS} handler={searchByPayment} />
         ) : null}
-        <Table data={data} />
+        <Table handlerCheckbox={checkedHandler} data={data} />
       </BlockContainer>
     </MainTemplate>
   );

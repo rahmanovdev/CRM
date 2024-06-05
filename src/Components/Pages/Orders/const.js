@@ -9,7 +9,7 @@ export const orderList = [
       last_name: 'Chute',
       full_name: 'Chieko Chute',
     },
-    payment_status: 'paid',
+    payment_status: 'unpaid',
     status: 'Completed',
     color_status: 'rgba(12, 175, 96, 1)',
     bg_status: 'rgba(231, 247, 239, 1)',
@@ -41,7 +41,7 @@ export const orderList = [
       last_name: 'Smith',
       full_name: 'Alice Smith',
     },
-    payment_status: 'pending',
+    payment_status: 'paid',
     status: 'Shipping',
     color_status: 'rgba(140, 98, 255, 1)',
     bg_status: 'rgba(244, 240, 255, 1)',
@@ -109,6 +109,22 @@ export const TABS_LIST = [
     active: false,
   },
 
+
+]
+
+export const PAIMENT_OPTIONS =[
+  {
+    value: 'paid',
+    label: 'Paid',
+  },
+  {
+    value: 'pending',
+    label: 'Pending',
+  },
+  {
+    value: 'unpaid',
+    label: 'Unpaid',
+  },
 
 ]
 
