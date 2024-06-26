@@ -9,8 +9,9 @@ import {
   SelectValue,
 } from "./styled";
 import useOnClickOutside from "../../../Hooks/useOnClickOutside";
+import ChevronIcon from "../../../Assets/Icons/ChevronIcon";
 
-export default function Select({ options, handler }) {
+export default function Select({ height, width, maxWidth, options, handler }) {
   const [view, setView] = useState(false);
   const [currentOption, setCurrentOption] = useState(null);
   const selectRef = useRef(null);
@@ -19,43 +20,42 @@ export default function Select({ options, handler }) {
 
   const hideView = () => setView(false);
 
+  const setOption = (option) => {
+    setCurrentOption(option.label);
+    handler(option);
+    hideView();
+  };
 
-  const setOption = (option)=> {
-    setCurrentOption(option.label)
-    handler(option)
-    hideView()
-  }
-
-  const clearHandler = (event)=> {
-    event.stopPropagation()
+  const clearHandler = (event) => {
+    event.stopPropagation();
     handler(null);
     setCurrentOption(null);
-      hideView(false);
-  }
+    hideView(false);
+  };
 
-  useOnClickOutside(selectRef,hideView);
+  useOnClickOutside(selectRef, hideView);
 
   return (
-    <SelectStyled ref={selectRef}>
-      <SelectContent onClick={togleView}>
-        <SelectValue  active={String(currentOption)}>{ currentOption ?? "Select"}</SelectValue>
+    <SelectStyled
+     maxWidth={maxWidth}
+     width={width}
+     ref={selectRef}>
+      <SelectContent height={height} onClick={togleView}>
+        <SelectValue active={String(currentOption)}>
+          {currentOption ?? "Select"}
+        </SelectValue>
         <SelectIcon>
-           <SelectClear onClick={clearHandler}>X</SelectClear>
-              A
+          <SelectClear onClick={clearHandler}>X</SelectClear>
+          <ChevronIcon />
         </SelectIcon>
-       
       </SelectContent>
 
       {view ? (
         <SelectOptions>
           {options.map((option) => (
-            <SelectOption
-             key={option.value}
-             onClick={()=> setOption(option)}
-             
-             >
-                
-                {option.label}</SelectOption>
+            <SelectOption key={option.value} onClick={() => setOption(option)}>
+              {option.label}
+            </SelectOption>
           ))}
         </SelectOptions>
       ) : null}

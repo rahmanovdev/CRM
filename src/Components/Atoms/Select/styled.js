@@ -2,16 +2,16 @@ import { styled } from "styled-components";
 
 export const SelectStyled = styled.div`
   position: relative;
-  max-width: 248px;
-  width: 100%;
+  max-width: ${({ maxWidth }) => maxWidth || "248px"};
+  width: ${({ width }) => width || "100%"};
 `;
 
 export const SelectContent = styled.div`
-display: flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #fafafa;
-  padding: 8px 16px;
+  padding: 14px 16px;
   border-radius: 12px;
   cursor: pointer;
 `;
@@ -22,14 +22,14 @@ export const SelectValue = styled.div`
   line-height: 24px;
   letter-spacing: 0.20000000298023224px;
   text-align: left;
-  color:${({active})=> active === 'null' ? 'rgba(160, 174, 192, 1)' : 'rgba(17, 24, 39, 1)  '} ;
+  color: ${({ active }) =>
+    active === "null" ? "rgba(160, 174, 192, 1)" : "rgba(17, 24, 39, 1)  "};
 `;
 
 export const SelectIcon = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  
 `;
 
 export const SelectOptions = styled.div`
@@ -45,7 +45,7 @@ export const SelectOptions = styled.div`
   line-height: 24px;
   letter-spacing: 0.20000000298023224px;
   text-align: left;
-    z-index:5;
+  z-index: 5;
   overflow: hidden;
 `;
 
@@ -54,7 +54,7 @@ export const SelectOption = styled.div`
   margin-top: 3px;
   padding: 8px 16px;
 
-  transition: all 0.3s;;
+  transition: all 0.3s;
   &:first-child {
     margin: 0px;
   }
@@ -65,6 +65,4 @@ export const SelectOption = styled.div`
   }
 `;
 
-export const SelectClear = styled.div`
-
-`
+export const SelectClear = styled.div``;

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 
@@ -14,6 +15,11 @@ export const ProfileStyled = styled.div`
 `
 
 export const ProfileTexts = styled.div``
+
+export const ProfileTextsNav = styled(NavLink)`
+    text-decoration: none;
+    
+`
 
 export const ProfileFullName = styled.h3`
     font-size: 16px;
