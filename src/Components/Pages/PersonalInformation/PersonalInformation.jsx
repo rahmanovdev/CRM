@@ -19,7 +19,7 @@ import {
 import Button from "../../Atoms/Button/Button";
 
 import { REGIONS } from "./const";
-import Select from "../../Atoms/Select/Select";
+import Select from "../../Atoms/Select/Select"; 
 import Input from "../../Atoms/Input/Input";
 
 export default function PersonalInformation() {

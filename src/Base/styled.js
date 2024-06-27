@@ -1,8 +1,13 @@
 import { styled } from "styled-components";
 
 export const BlockContainer = styled.div`
+
   background-color: #fff;
   border-radius: 16px;
+
+  border-radius: ${({ borderRadius})=>  borderRadius || '16px'};
+  width: ${({ width})=> width || '100%'};
+  height: ${({ height})=> height || '100%'};
   padding: ${({padding}) => padding ?? '24px 0px'};
   margin-top: ${({marginTop}) => marginTop || 0}
 `
